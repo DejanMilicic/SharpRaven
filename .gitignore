@@ -6,3 +6,7 @@ SharpRaven/SharpRaven/bin/
 SharpRaven/SharpRaven/obj/
 
 *.user
+
+SharpRaven/SharpRaven/wwwroot/Scripts/WebSharper/SharpRaven.js
+
+SharpRaven/SharpRaven/wwwroot/Scripts/WebSharper/SharpRaven.min.js
