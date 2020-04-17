@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Infrastructure.fs" />
     <Compile Include="Remoting.fs" />
     <Compile Include="Client.fs" />
     <Compile Include="Site.fs" />
