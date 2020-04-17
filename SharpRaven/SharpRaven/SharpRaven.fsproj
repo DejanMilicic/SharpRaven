@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="RavenDB.Client" Version="4.2.102" />
     <PackageReference Include="WebSharper" Version="4.6.1.381" />    
     <PackageReference Include="WebSharper.FSharp" Version="4.6.1.381" />
     <PackageReference Include="WebSharper.UI" Version="4.6.1.207" />
