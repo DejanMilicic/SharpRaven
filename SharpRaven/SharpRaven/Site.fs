@@ -36,13 +36,6 @@ module Templating =
                 .Doc()
         )
 
-[<CLIMutable>]
-type User =
-    {
-        Id : string
-        Name : string
-    }
-
 module Site =
     open WebSharper.UI.Html
 
