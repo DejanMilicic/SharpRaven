@@ -1,23 +1,16 @@
 namespace SharpRaven
 
-open System
 open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
-open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open WebSharper.AspNetCore
-open Raven.Client.Documents
-open Raven.Client.Documents.Session
 
 type Startup() =
 
     member this.ConfigureServices(services: IServiceCollection) =
-        services.AddSingleton<IDocumentStore>(Infrastructure.Persistence.configureStore) |> ignore
-        services.AddScoped<IDocumentSession>(fun sp -> sp.GetService<IDocumentStore>().OpenSession()) |> ignore
-
         services.AddSitelet(Site.Main)
             .AddAuthentication("WebSharper")
             .AddCookie("WebSharper", fun options -> ())
