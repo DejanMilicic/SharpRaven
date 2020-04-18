@@ -4,6 +4,8 @@ open WebSharper
 open WebSharper.Sitelets
 open WebSharper.UI
 open WebSharper.UI.Server
+open Raven.Client.Documents.Session
+open Infrastructure
 
 type EndPoint =
     | [<EndPoint "/">] Home
@@ -34,6 +36,13 @@ module Templating =
                 .Doc()
         )
 
+[<CLIMutable>]
+type User =
+    {
+        Id : string
+        Name : string
+    }
+
 module Site =
     open WebSharper.UI.Html
 
@@ -44,6 +53,11 @@ module Site =
         ]
 
     let AboutPage ctx =
+        let session = Persistence.Store.OpenSession()
+        let user = { Id = null; Name = "John" }
+        session.Store(user)
+        session.SaveChanges()
+
         Templating.Main ctx EndPoint.About "About" [
             h1 [] [text "About"]
             p [] [text "This is a template WebSharper client-server application."]
