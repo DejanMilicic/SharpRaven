@@ -45,11 +45,14 @@ module Site =
             div [] [client <@ Client.Main() @>]
         ]
 
-    let AboutPage ctx =
+    let createNewUser = 
         let session = Persistence.Store.OpenSession()
         let user = { Id = null; Name = "John" }
         session.Store(user)
         session.SaveChanges()
+
+    let AboutPage ctx =
+        createNewUser
 
         Templating.Main ctx EndPoint.About "About" [
             h1 [] [text "About"]
