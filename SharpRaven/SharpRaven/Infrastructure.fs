@@ -1,4 +1,4 @@
-﻿module Infrastructure
+module Infrastructure
 
 open Raven.Client.Documents
 open Raven.Client.Documents.Indexes
@@ -7,6 +7,7 @@ open SharpRaven
 open System.Linq.Expressions
 open Microsoft.FSharp.Quotations
 open System
+open FSharp.Quotations.Evaluator
 
 module Persistence =
 
@@ -69,13 +70,14 @@ module Persistence =
                         } @>
 
     do
-        this.Map <- ToIndexExpression map
-        this.Reduce <- ToIndexExpression reduce
+        this.Map <- QuotationEvaluator.ToLinqExpression map
+        this.Reduce <- QuotationEvaluator.ToLinqExpression reduce
 
 
   let configure (store : IDocumentStore) =
-      IndexCreation.CreateIndexes(Assembly.GetExecutingAssembly(), store)
       store.Initialize () |> ignore
+      IndexCreation.CreateIndexes(Assembly.GetExecutingAssembly(), store)
+
 
   let Store = 
       let store = new DocumentStore ()
