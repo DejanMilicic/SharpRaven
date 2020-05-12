@@ -6,6 +6,7 @@ open WebSharper.UI
 open WebSharper.UI.Server
 open Raven.Client.Documents.Session
 open Infrastructure
+open System.Linq
 
 type EndPoint =
     | [<EndPoint "/">] Home
@@ -48,15 +49,23 @@ module Site =
     let createNewUser = 
         let session = Persistence.Store.OpenSession()
         let user = { Id = null; Name = "John" }
-        session.Store(user)
+        session.Advanced.RawQuery Store(user)
         session.SaveChanges()
 
-    let AboutPage ctx =
-        createNewUser
+    type UsersByName = {
+        Name: string
+        Count: int
+    }
 
+    let getUserCount =
+        let session = Persistence.Store.OpenSession()
+        let res = session.Query<UsersByName>("Users/ByName").ToList().First()
+        res.Count
+
+    let AboutPage ctx =
         Templating.Main ctx EndPoint.About "About" [
             h1 [] [text "About"]
-            p [] [text "This is a template WebSharper client-server application."]
+            p [] [text ("We currently have " + getUserCount.ToString() + " users")] 
         ]
 
     [<Website>]
