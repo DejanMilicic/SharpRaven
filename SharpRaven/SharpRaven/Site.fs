@@ -49,7 +49,7 @@ module Site =
     let createNewUser = 
         let session = Persistence.Store.OpenSession()
         let user = { Id = null; Name = "John" }
-        session.Advanced.RawQuery Store(user)
+        session.Store(user)
         session.SaveChanges()
 
     type UsersByName = {
